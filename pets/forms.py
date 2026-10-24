@@ -1,4 +1,4 @@
-from django import froms
+from django import forms
 from .models import Pet
 
 class PetForm(forms.ModelForm):
