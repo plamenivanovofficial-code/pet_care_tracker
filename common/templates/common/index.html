@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF=8">
+    <title>Pet Care Tracker</title>
+</head>
+<body>
+    <h1>Добре дошли  в Pet Care Tracker! </h1>
+    <p>Сървърът работи успешно и шаблона се зареди!</p>
+
+    <a href="{% url 'add_pet' %}">Добави нов любимец</a>
+</body>
+</html>
