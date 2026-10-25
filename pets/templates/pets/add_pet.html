@@ -1,20 +1,20 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="BG">
+<html lang="bg">
 <head>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <meta charset="UTF=8">
+    <meta charset="UTF-8">
     <title>Добави любимец</title>
 </head>
 <body>
     <h1>Добавяне на нов любимец</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p}}
         <button type="submit">Запази</button>
     </form>
     
     <br>
-    <a href="{% url 'index' %}">Kъм началната страница</a>
+    <a href="{% url 'index' %}">Към началната страница</a>
 </body>    
 </html>

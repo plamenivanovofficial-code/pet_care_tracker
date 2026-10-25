@@ -14,7 +14,8 @@ class Pet(models.Model):
     name = models.CharField(max_length=30)
     category = models.CharField(max_length=30)
     age = models.PositiveIntegerField()
-    main_photo = models.URLField()
+    photo_url = models.URLField(blank=True)
+    photo_file = models.ImageField(upload_to='pets/', blank=True)
     description = models.TextField(blank=True)
     tags = models.ManyToManyField(
         Tag,
@@ -24,6 +25,12 @@ class Pet(models.Model):
     
     class Meta:
         ordering = ['name']
+
+    @property
+    def photo(self):
+        if self.photo_file:
+            return self.photo_file.url
+        return self.photo_url
 
     def __str__(self):
         return self.name 
