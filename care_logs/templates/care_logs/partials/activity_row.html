@@ -1,0 +1,22 @@
+{% comment %}
+    Един ред от дневника. Преизползва се в дневника, на началната страница и при детайлите на любимец.
+    hide_pet=True скрива името на любимеца (на страницата на самия любимец).
+{% endcomment %}
+<li class="pc-log-item">
+    <time class="pc-log-date" datetime="{{ activity.date|date:'Y-m-d' }}">
+        <span class="pc-log-day">{{ activity.date|date:"j" }}</span>
+        <span class="pc-log-month">{{ activity.date|date:"b Y" }}</span>
+    </time>
+    <div>
+        <a href="{% url 'activity_detail' activity.pk %}" class="pc-log-title">{{ activity.name }}</a>
+        {% if not hide_pet %}
+            <div class="pc-log-sub">
+                за <a href="{% url 'pet_detail' activity.pet.pk %}">{{ activity.pet.name }}</a>
+            </div>
+        {% endif %}
+        {% if activity.description %}
+            <div class="pc-log-note">{{ activity.description|truncatewords:14 }}</div>
+        {% endif %}
+    </div>
+    <a href="{% url 'activity_detail' activity.pk %}" class="pc-btn pc-btn-outline pc-btn-sm pc-log-action">Отвори</a>
+</li>

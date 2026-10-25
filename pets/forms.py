@@ -78,8 +78,15 @@ class TagForm(forms.ModelForm):
                 'max_length': 'Името е твърде дълго (макс. 20 символа).',
             },
         }
-        
+         
     def clean_name(self):
         name = self.cleaned_data['name']
         name = name.strip().lower()
-        return name    
+        return name
+
+    
+class PetDeleteForm(PetForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.disabled = True        

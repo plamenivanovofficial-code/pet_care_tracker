@@ -1,0 +1,465 @@
+/* =========================================================
+   Pet Care Tracker – бутиков стил върху Bootstrap 5 (grid + collapse)
+   Палитра: салвия, порцелан, бутилково зелено, месинг
+   Шрифтове: Forum (заглавия), Manrope (текст) – локално, с кирилица
+   ========================================================= */
+
+/* ---------- Шрифтове ---------- */
+@font-face {
+    font-family: 'Forum';
+    src: url('../fonts/forum-cyrillic-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+    font-family: 'Forum';
+    src: url('../fonts/forum-latin-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-cyrillic-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-cyrillic-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-cyrillic-600-normal.woff2') format('woff2'); font-weight: 600; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-cyrillic-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/manrope-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* ---------- Токени ---------- */
+:root {
+    --pc-bg: #eceee8;         /* салвия */
+    --pc-surface: #f8f8f5;    /* порцелан */
+    --pc-ink: #1f2b25;        /* бутилково зелено */
+    --pc-muted: #66706a;
+    --pc-line: #cfd5cb;
+    --pc-brass: #9c7f4e;      /* месинг – само за малки акценти */
+    --pc-wine: #7b2d2d;       /* опасни действия */
+
+    --pc-serif: 'Forum', 'Cormorant Garamond', Georgia, serif;
+    --pc-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    --pc-gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+/* ---------- Основа ---------- */
+body {
+    background: var(--pc-bg);
+    color: var(--pc-ink);
+    font-family: var(--pc-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    /* Manrope има български локални форми (д като g, т като m) – изключваме ги за четимост */
+    font-feature-settings: "locl" 0;
+    font-language-override: "RUS";
+}
+
+h1, h2, h3, .pc-serif {
+    font-family: var(--pc-serif);
+    font-weight: 400;
+    letter-spacing: .005em;
+    line-height: 1.1;
+}
+.pc-h1 { font-size: clamp(2.4rem, 6vw, 4.25rem); }
+.pc-h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); }
+.pc-h3 { font-size: 1.5rem; }
+
+a { color: var(--pc-ink); text-decoration-color: var(--pc-brass); text-underline-offset: .2em; }
+a:hover { color: var(--pc-brass); }
+
+:focus-visible {
+    outline: 2px solid var(--pc-brass);
+    outline-offset: 3px;
+}
+
+.pc-muted { color: var(--pc-muted); }
+.pc-lead { font-size: 1.125rem; color: var(--pc-muted); max-width: 34rem; }
+.pc-narrow { max-width: 640px; margin-inline: auto; }
+
+.pc-section { margin-top: clamp(3rem, 7vw, 5.5rem); }
+.pc-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .5rem 1.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: var(--pc-gap);
+    border-bottom: 1px solid var(--pc-line);
+}
+.pc-section-head h2 { margin: 0; }
+
+/* ---------- Навигация ---------- */
+.pc-navbar {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--pc-line);
+    background: var(--pc-bg);
+}
+.pc-logo {
+    font-family: var(--pc-serif);
+    font-size: 1.6rem;
+    color: var(--pc-ink);
+    text-decoration: none;
+    line-height: 1;
+}
+.pc-logo:hover { color: var(--pc-ink); }
+.pc-navbar .nav-link {
+    color: var(--pc-muted);
+    font-weight: 500;
+    padding: .4rem 0 !important;
+    margin-inline: .9rem;
+    border-bottom: 1px solid transparent;
+}
+.pc-navbar .nav-link:hover { color: var(--pc-ink); }
+.pc-navbar .nav-link.active {
+    color: var(--pc-ink);
+    border-bottom-color: var(--pc-brass);
+}
+.pc-navbar .navbar-toggler { border: 1px solid var(--pc-line); border-radius: 2px; }
+.pc-navbar .navbar-toggler:focus { box-shadow: none; }
+.pc-navbar .dropdown-menu {
+    border: 1px solid var(--pc-line);
+    border-radius: 2px;
+    background: var(--pc-surface);
+    box-shadow: none;
+    padding: .4rem 0;
+}
+.pc-navbar .dropdown-item { padding: .5rem 1.1rem; }
+.pc-navbar .dropdown-item:hover { background: var(--pc-bg); color: var(--pc-ink); }
+
+@media (max-width: 991.98px) {
+    .pc-navbar .navbar-nav { padding-top: 1rem; }
+    .pc-navbar .nav-link { margin-inline: 0; }
+    .pc-navbar .dropdown { margin-top: .75rem; }
+}
+
+/* ---------- Бутони ---------- */
+.pc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .8rem 1.6rem;
+    font-family: var(--pc-sans);
+    font-weight: 600;
+    font-size: .95rem;
+    letter-spacing: .02em;
+    border: 1px solid var(--pc-ink);
+    border-radius: 2px;
+    background: var(--pc-ink);
+    color: var(--pc-surface);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.pc-btn:hover { background: transparent; color: var(--pc-ink); }
+
+.pc-btn-outline { background: transparent; color: var(--pc-ink); }
+.pc-btn-outline:hover { background: var(--pc-ink); color: var(--pc-surface); }
+
+.pc-btn-sm { padding: .5rem 1rem; font-size: .875rem; }
+
+.pc-btn-danger { background: var(--pc-wine); border-color: var(--pc-wine); }
+.pc-btn-danger:hover { background: transparent; color: var(--pc-wine); }
+
+.pc-link-danger { color: var(--pc-wine); }
+.pc-link-danger:hover { color: var(--pc-wine); text-decoration-color: var(--pc-wine); }
+
+/* ---------- Портрет в арка – отличителният елемент ---------- */
+.pc-arch {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 999px 999px 2px 2px;
+    background: var(--pc-line);
+}
+.pc-arch-frame {
+    padding: .5rem;
+    border: 1px solid var(--pc-line);
+    border-radius: 999px 999px 4px 4px;
+}
+.pc-arch-empty {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: var(--pc-muted);
+    font-family: var(--pc-serif);
+    font-size: 1.35rem;
+}
+
+/* ---------- Карта на любимец (галерия) ---------- */
+.pc-pet {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.pc-pet:hover { color: inherit; }
+.pc-pet .pc-arch-frame { transition: border-color .25s ease; }
+.pc-pet:hover .pc-arch-frame,
+.pc-pet:focus-visible .pc-arch-frame { border-color: var(--pc-brass); }
+.pc-pet-name {
+    font-family: var(--pc-serif);
+    font-size: 1.6rem;
+    margin: 1rem 0 .1rem;
+}
+.pc-pet-meta { color: var(--pc-muted); font-size: .95rem; }
+
+/* ---------- Етикети ---------- */
+.pc-tag {
+    display: inline-block;
+    padding: .2rem .7rem;
+    border: 1px solid var(--pc-line);
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--pc-ink);
+    text-decoration: none;
+    background: transparent;
+}
+a.pc-tag:hover { border-color: var(--pc-brass); color: var(--pc-ink); }
+
+/* ---------- Начална страница ---------- */
+.pc-hero {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: var(--pc-gap);
+    align-items: center;
+}
+.pc-hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+.pc-hero-figure { max-width: 360px; justify-self: end; width: 100%; }
+.pc-hero-caption { margin-top: .9rem; text-align: center; color: var(--pc-muted); font-size: .9rem; }
+
+.pc-summary {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--pc-line);
+    color: var(--pc-muted);
+}
+.pc-summary strong { color: var(--pc-ink); font-weight: 600; }
+
+@media (max-width: 767.98px) {
+    .pc-hero { grid-template-columns: 1fr; }
+    .pc-hero-figure { justify-self: center; max-width: 260px; order: -1; }
+}
+
+/* ---------- Дневник ---------- */
+.pc-log { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--pc-line); }
+.pc-log-item {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--pc-line);
+}
+.pc-log-date { text-align: center; line-height: 1; }
+.pc-log-day { display: block; font-family: var(--pc-serif); font-size: 2.1rem; }
+.pc-log-month { display: block; margin-top: .3rem; font-size: .8rem; color: var(--pc-muted); }
+.pc-log-title { font-weight: 600; text-decoration: none; }
+.pc-log-sub { font-size: .9rem; color: var(--pc-muted); }
+.pc-log-sub a { color: var(--pc-muted); }
+.pc-log-note { font-size: .925rem; margin-top: .2rem; }
+
+@media (max-width: 575.98px) {
+    .pc-log-item { grid-template-columns: 3.25rem 1fr; }
+    .pc-log-item .pc-log-action { display: none; }
+    .pc-log-day { font-size: 1.7rem; }
+}
+
+/* ---------- Детайли ---------- */
+.pc-details { border-top: 1px solid var(--pc-line); margin: 0; }
+.pc-details > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    padding: .9rem 0;
+    border-bottom: 1px solid var(--pc-line);
+}
+.pc-details dt { font-weight: 500; color: var(--pc-muted); }
+.pc-details dd { margin: 0; }
+
+@media (max-width: 575.98px) {
+    .pc-details > div { grid-template-columns: 1fr; gap: .2rem; }
+}
+
+.pc-back { display: inline-block; margin-bottom: 1.5rem; color: var(--pc-muted); font-size: .95rem; }
+
+/* ---------- Филтър ---------- */
+.pc-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: end;
+    margin-bottom: var(--pc-gap);
+}
+.pc-filter .pc-field { flex: 1 1 16rem; margin: 0; }
+
+/* ---------- Форми ---------- */
+.pc-form-title { margin-bottom: .5rem; }
+.pc-form-intro { color: var(--pc-muted); margin-bottom: 2.25rem; }
+
+.pc-field { margin-bottom: 1.6rem; }
+.pc-field .form-label {
+    display: block;
+    font-weight: 600;
+    font-size: .925rem;
+    margin-bottom: .35rem;
+}
+.pc-required { color: var(--pc-brass); margin-left: .15rem; }
+
+.pc-field input[type="text"],
+.pc-field input[type="number"],
+.pc-field input[type="url"],
+.pc-field input[type="date"],
+.pc-field select,
+.pc-field textarea {
+    display: block;
+    width: 100%;
+    padding: .7rem 0;
+    font: inherit;
+    color: var(--pc-ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--pc-ink);
+    border-radius: 0;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.pc-field textarea { min-height: 6.5rem; resize: vertical; }
+.pc-field select { appearance: auto; }
+.pc-field input::placeholder,
+.pc-field textarea::placeholder { color: #9aa29c; }
+.pc-field input:focus,
+.pc-field select:focus,
+.pc-field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--pc-brass);
+    box-shadow: 0 1px 0 0 var(--pc-brass);
+}
+
+.pc-field input[type="file"] {
+    display: block;
+    width: 100%;
+    font: inherit;
+    font-size: .925rem;
+    padding: .75rem;
+    border: 1px dashed var(--pc-line);
+    border-radius: 2px;
+    background: var(--pc-surface);
+}
+.pc-field input[type="file"]::file-selector-button {
+    margin-right: 1rem;
+    padding: .45rem .9rem;
+    font: inherit;
+    font-weight: 600;
+    color: var(--pc-surface);
+    background: var(--pc-ink);
+    border: 0;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pc-field.has-error input,
+.pc-field.has-error select,
+.pc-field.has-error textarea { border-bottom-color: var(--pc-wine); }
+
+.pc-field.is-disabled input,
+.pc-field.is-disabled select,
+.pc-field.is-disabled textarea {
+    color: var(--pc-muted);
+    border-bottom-style: dotted;
+    border-bottom-color: var(--pc-line);
+    cursor: not-allowed;
+}
+.pc-field.is-disabled input[type="file"] { display: none; }
+.pc-field.is-disabled input[type="checkbox"][id$="-clear_id"],
+.pc-field.is-disabled label[for$="-clear_id"] { display: none; }
+
+/* Отметките за етикети (CheckboxSelectMultiple) */
+.pc-field div[id^="id_tags"] { display: flex; flex-wrap: wrap; gap: .5rem; }
+.pc-field div[id^="id_tags"] label {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .4rem .9rem;
+    border: 1px solid var(--pc-line);
+    border-radius: 999px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.pc-field div[id^="id_tags"] label:has(input:checked) { border-color: var(--pc-ink); }
+.pc-field div[id^="id_tags"] input { accent-color: var(--pc-ink); }
+
+.form-text { color: var(--pc-muted); font-size: .85rem; margin-top: .4rem; }
+.pc-error { color: var(--pc-wine); font-size: .875rem; font-weight: 600; margin-top: .4rem; }
+
+.pc-notice {
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--pc-brass);
+    background: var(--pc-surface);
+}
+.pc-notice-danger { border-left-color: var(--pc-wine); }
+
+.pc-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2.25rem;
+}
+
+/* ---------- Празно състояние ---------- */
+.pc-empty {
+    padding: clamp(2rem, 6vw, 3.5rem) 1rem;
+    text-align: center;
+    border: 1px solid var(--pc-line);
+    border-radius: 2px;
+}
+.pc-empty p { color: var(--pc-muted); margin-bottom: 1.25rem; }
+.pc-empty .pc-serif { font-size: 1.6rem; color: var(--pc-ink); margin-bottom: .4rem; }
+
+/* ---------- 404 ---------- */
+.pc-404 { text-align: center; padding-block: clamp(2rem, 8vw, 5rem); }
+.pc-404-code {
+    font-family: var(--pc-serif);
+    font-size: clamp(6rem, 22vw, 11rem);
+    line-height: 1;
+    color: var(--pc-brass);
+}
+
+/* ---------- Footer ---------- */
+.pc-footer {
+    border-top: 1px solid var(--pc-line);
+    color: var(--pc-muted);
+    font-size: .9rem;
+}
+.pc-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem 2rem;
+    padding-block: 2rem;
+}
+.pc-footer .pc-logo { font-size: 1.25rem; }
+.pc-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.pc-footer nav a { color: var(--pc-muted); text-decoration: none; }
+.pc-footer nav a:hover { color: var(--pc-ink); }
+
+/* ---------- Намалено движение ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+.pc-portrait-lg { max-width: 380px; }
+
+/* Полетата и бутоните не наследяват font-feature-settings по подразбиране */
+button, input, select, textarea, .pc-btn {
+    font-feature-settings: "locl" 0;
+    font-language-override: "RUS";
+}

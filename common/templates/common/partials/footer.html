@@ -1,0 +1,15 @@
+{% now "Y" as current_year %}
+<footer class="pc-footer mt-auto">
+    <div class="container pc-footer-inner">
+        <div>
+            <a class="pc-logo" href="{% url 'index' %}">Pet Care Tracker</a>
+            <div class="small mt-1">&copy; {{ current_year }}</div>
+        </div>
+        <nav aria-label="Долна навигация">
+            <a href="{% url 'pet_list' %}">Любимци</a>
+            <a href="{% url 'activity_list' %}">Дневник</a>
+            <a href="{% url 'tag_list' %}">Етикети</a>
+        </nav>
+        <div>Проект за Django Basics, SoftUni</div>
+    </div>
+</footer>

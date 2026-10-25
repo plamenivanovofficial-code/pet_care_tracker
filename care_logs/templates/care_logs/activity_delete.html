@@ -1,0 +1,37 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Изтриване на запис{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        <a href="{% url 'activity_detail' object.pk %}" class="pc-back">Обратно към записа</a>
+        <h1 class="pc-h1 pc-form-title">Да изтрия ли записа?</h1>
+
+        <dl class="pc-details mt-4 mb-4">
+            <div>
+                <dt>Грижа</dt>
+                <dd>{{ object.name }}</dd>
+            </div>
+            <div>
+                <dt>Любимец</dt>
+                <dd>{{ object.pet.name }}</dd>
+            </div>
+            <div>
+                <dt>Дата</dt>
+                <dd>{{ object.date|date:"d.m.Y" }}</dd>
+            </div>
+        </dl>
+
+        <div class="pc-notice pc-notice-danger">Изтриването е окончателно.</div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="pc-form-actions">
+                <button type="submit" class="pc-btn pc-btn-danger">Изтрий окончателно</button>
+                <a href="{% url 'activity_detail' object.pk %}">Отказ</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

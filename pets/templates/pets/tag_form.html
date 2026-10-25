@@ -1,0 +1,23 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Нов етикет{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        <a href="{% url 'tag_list' %}" class="pc-back">Обратно към етикетите</a>
+        <h1 class="pc-h1 pc-form-title">Нов етикет</h1>
+        <p class="pc-form-intro">Кратка дума или израз. Ще можеш да го избираш при всеки любимец.</p>
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {% include 'common/partials/form_fields.html' with form=form %}
+
+            <div class="pc-form-actions">
+                <button type="submit" class="pc-btn">Създай етикета</button>
+                <a href="{% url 'tag_list' %}">Отказ</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'common/base.html' %}
+
+{% comment %}
+    Един шаблон за CareActivityCreateView и CareActivityUpdateView.
+{% endcomment %}
+
+{% block title %}{% if object %}Редакция на запис{% else %}Нов запис{% endif %}{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        {% if object %}
+            <a href="{% url 'activity_detail' object.pk %}" class="pc-back">Обратно към записа</a>
+            <h1 class="pc-h1 pc-form-title">Редакция на запис</h1>
+            <p class="pc-form-intro">{{ object.name }} за {{ object.pet.name }}</p>
+        {% else %}
+            <a href="{% url 'activity_list' %}" class="pc-back">Обратно към дневника</a>
+            <h1 class="pc-h1 pc-form-title">Нов запис</h1>
+            <p class="pc-form-intro">Какво направи, кога и за кой любимец.</p>
+        {% endif %}
+
+        {% if not object and not form.fields.pet.queryset.exists %}
+            <div class="pc-notice">
+                Първо добави любимец, за да има за кого да запишеш грижа.
+                <a href="{% url 'pet_add' %}" class="fw-semibold">Добави любимец</a>
+            </div>
+        {% endif %}
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {% include 'common/partials/form_fields.html' with form=form %}
+
+            <div class="pc-form-actions">
+                <button type="submit" class="pc-btn">{% if object %}Запази промените{% else %}Запиши в дневника{% endif %}</button>
+                {% if object %}
+                    <a href="{% url 'activity_detail' object.pk %}">Отказ</a>
+                {% else %}
+                    <a href="{% url 'activity_list' %}">Отказ</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

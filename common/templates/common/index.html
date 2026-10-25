@@ -1,15 +1,84 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <meta charset="UTF=8">
-    <title>Pet Care Tracker</title>
-</head>
-<body>
-    <h1>Добре дошли  в Pet Care Tracker! </h1>
-    <p>Сървърът работи успешно и шаблона се зареди!</p>
+{% extends 'common/base.html' %}
 
-    <a href="{% url 'add_pet' %}">Добави нов любимец</a>
-</body>
-</html>
+{% block title %}Начало{% endblock %}
+
+{% block content %}
+
+    <section class="pc-hero">
+        <div>
+            <h1 class="pc-h1 mb-4">Грижата за любимците,<br>записана с внимание.</h1>
+            <p class="pc-lead">Хранения, ваксини, разходки и прегледи. Цялата история на всеки любимец, подредена на едно място.</p>
+            <div class="pc-hero-actions">
+                <a href="{% url 'pet_add' %}" class="pc-btn">Добави любимец</a>
+                <a href="{% url 'activity_add' %}" class="pc-btn pc-btn-outline">Запиши грижа</a>
+            </div>
+
+            <p class="pc-summary mb-0">
+                В момента следиш <strong>{{ pets|length }} любим{{ pets|length|pluralize:"ец,ци" }}</strong>
+                и имаш <strong>{{ care_activities|length }} запис{{ care_activities|length|pluralize:",а" }}</strong> в дневника.
+            </p>
+        </div>
+
+        <figure class="pc-hero-figure m-0">
+            {% with featured=pets|first %}
+                {% if featured %}
+                    <a href="{% url 'pet_detail' featured.pk %}" class="pc-pet">
+                        <div class="pc-arch-frame">
+                            <img src="{{ featured.photo }}" alt="Портрет на {{ featured.name }}" class="pc-arch">
+                        </div>
+                    </a>
+                    <figcaption class="pc-hero-caption">{{ featured.name }}, {{ featured.category|lower }}</figcaption>
+                {% else %}
+                    <div class="pc-arch-frame">
+                        <div class="pc-arch pc-arch-empty">Тук ще стои портретът на първия ти любимец</div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </figure>
+    </section>
+
+    <section class="pc-section">
+        <div class="pc-section-head">
+            <h2 class="pc-h2">Любимци</h2>
+            <a href="{% url 'pet_list' %}">Всички любимци</a>
+        </div>
+
+        {% if pets %}
+            <div class="row g-4 g-lg-5">
+                {% for pet in pets|slice:":3" %}
+                    <div class="col-6 col-md-4">
+                        {% include 'pets/partials/pet_card.html' with pet=pet %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="pc-empty">
+                <p class="pc-serif">Още няма любимци</p>
+                <p>Добави първия и започни дневника му.</p>
+                <a href="{% url 'pet_add' %}" class="pc-btn">Добави любимец</a>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="pc-section">
+        <div class="pc-section-head">
+            <h2 class="pc-h2">Последни грижи</h2>
+            <a href="{% url 'activity_list' %}">Целият дневник</a>
+        </div>
+
+        {% if care_activities %}
+            <ul class="pc-log">
+                {% for activity in care_activities|slice:":5" %}
+                    {% include 'care_logs/partials/activity_row.html' with activity=activity %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="pc-empty">
+                <p class="pc-serif">Дневникът е празен</p>
+                <p>Първият запис ще се появи тук.</p>
+                <a href="{% url 'activity_add' %}" class="pc-btn pc-btn-outline">Запиши грижа</a>
+            </div>
+        {% endif %}
+    </section>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{{ activity.name }}{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        <a href="{% url 'activity_list' %}" class="pc-back">Обратно към дневника</a>
+
+        <h1 class="pc-h1 mb-2">{{ activity.name }}</h1>
+        <p class="pc-muted mb-4">{{ activity.date|date:"l, j F Y" }}</p>
+
+        <dl class="pc-details mb-4">
+            <div>
+                <dt>Любимец</dt>
+                <dd><a href="{% url 'pet_detail' activity.pet.pk %}">{{ activity.pet.name }}</a>, {{ activity.pet.category|lower }}</dd>
+            </div>
+            <div>
+                <dt>Кога</dt>
+                <dd>{{ activity.date|date:"d.m.Y" }}, преди {{ activity.date|timesince }}</dd>
+            </div>
+            <div>
+                <dt>Описание</dt>
+                <dd>{{ activity.description|default:"Няма описание."|linebreaksbr }}</dd>
+            </div>
+        </dl>
+
+        <div class="pc-form-actions mt-0">
+            <a href="{% url 'activity_edit' activity.pk %}" class="pc-btn">Редактирай</a>
+            <a href="{% url 'activity_delete' activity.pk %}" class="pc-link-danger">Изтрий записа</a>
+        </div>
+    </div>
+
+{% endblock %}

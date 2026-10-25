@@ -1,0 +1,30 @@
+{% comment %}
+    Преизползваем partial: рисува всяко поле на формата с label, грешки и помощен текст.
+    Употреба: {% include 'common/partials/form_fields.html' with form=form %}
+{% endcomment %}
+
+{% if form.non_field_errors %}
+    <div class="pc-notice pc-notice-danger" role="alert">
+        {% for error in form.non_field_errors %}
+            <div class="pc-error mt-0">{{ error }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% for field in form %}
+    <div class="pc-field {% if field.errors %}has-error{% endif %} {% if field.field.disabled %}is-disabled{% endif %}">
+        <label class="form-label" for="{{ field.id_for_label }}">
+            {{ field.label }}{% if field.field.required and not field.field.disabled %}<span class="pc-required" aria-hidden="true">*</span>{% endif %}
+        </label>
+
+        {{ field }}
+
+        {% if field.help_text and not field.field.disabled %}
+            <div class="form-text">{{ field.help_text }}</div>
+        {% endif %}
+
+        {% for error in field.errors %}
+            <div class="pc-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+{% endfor %}

@@ -1,0 +1,73 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{{ pet.name }}{% endblock %}
+
+{% block content %}
+
+    <a href="{% url 'pet_list' %}" class="pc-back">Обратно към любимците</a>
+
+    <div class="row g-4 g-lg-5 align-items-start">
+        <div class="col-12 col-md-5 col-lg-4">
+            <div class="pc-arch-frame pc-portrait-lg mx-auto">
+                <img src="{{ pet.photo }}" alt="Портрет на {{ pet.name }}" class="pc-arch">
+            </div>
+        </div>
+
+        <div class="col-12 col-md-7 col-lg-8">
+            <h1 class="pc-h1 mb-4">{{ pet.name }}</h1>
+
+            <dl class="pc-details mb-4">
+                <div>
+                    <dt>Вид</dt>
+                    <dd><a href="{% url 'pet_list' %}?category={{ pet.category|urlencode }}">{{ pet.category }}</a></dd>
+                </div>
+                <div>
+                    <dt>Възраст</dt>
+                    <dd>{{ pet.age }} г.</dd>
+                </div>
+                <div>
+                    <dt>Етикети</dt>
+                    <dd>
+                        {% for tag in pet.tags.all %}
+                            <span class="pc-tag me-1 mb-1">{{ tag.name }}</span>
+                        {% empty %}
+                            <span class="pc-muted">Няма</span>
+                        {% endfor %}
+                    </dd>
+                </div>
+                <div>
+                    <dt>Описание</dt>
+                    <dd>{{ pet.description|default:"Няма описание."|linebreaksbr }}</dd>
+                </div>
+            </dl>
+
+            <div class="pc-form-actions mt-0">
+                <a href="{% url 'pet_edit' pet.pk %}" class="pc-btn">Редактирай</a>
+                <a href="{% url 'pet_delete' pet.pk %}" class="pc-link-danger">Изтрий любимеца</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="pc-section">
+        <div class="pc-section-head">
+            <h2 class="pc-h2">Дневник на {{ pet.name }}</h2>
+            <a href="{% url 'activity_add' %}" class="pc-btn pc-btn-outline pc-btn-sm">Запиши грижа</a>
+        </div>
+
+        {% with activities=pet.care_activities.all %}
+            {% if activities %}
+                <ul class="pc-log">
+                    {% for activity in activities %}
+                        {% include 'care_logs/partials/activity_row.html' with activity=activity hide_pet=True %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="pc-empty">
+                    <p class="pc-serif">Няма записи за {{ pet.name }}</p>
+                    <p>Запиши първата грижа и тя ще се появи тук.</p>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </section>
+
+{% endblock %}

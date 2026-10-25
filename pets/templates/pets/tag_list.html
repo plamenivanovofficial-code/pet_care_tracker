@@ -1,0 +1,38 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Етикети{% endblock %}
+
+{% block content %}
+
+    <div class="pc-section-head">
+        <div>
+            <h1 class="pc-h1 mb-2">Етикети</h1>
+            <p class="pc-muted mb-0">Отличителни белези като „алергичен“ или „на диета“, които слагаш на любимците.</p>
+        </div>
+        <a href="{% url 'tag_add' %}" class="pc-btn">Нов етикет</a>
+    </div>
+
+    {% if tags %}
+        <dl class="pc-details">
+            {% for tag in tags %}
+                <div>
+                    <dt><span class="pc-tag">{{ tag.name }}</span></dt>
+                    <dd>
+                        {% for pet in tag.pets.all %}
+                            <a href="{% url 'pet_detail' pet.pk %}" class="me-3">{{ pet.name }}</a>
+                        {% empty %}
+                            <span class="pc-muted">Още не е сложен на любимец.</span>
+                        {% endfor %}
+                    </dd>
+                </div>
+            {% endfor %}
+        </dl>
+    {% else %}
+        <div class="pc-empty">
+            <p class="pc-serif">Още няма етикети</p>
+            <p>Създай етикет и после го избери във формата на любимеца.</p>
+            <a href="{% url 'tag_add' %}" class="pc-btn">Нов етикет</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Дневник{% endblock %}
+
+{% block content %}
+
+    <div class="pc-section-head">
+        <div>
+            <h1 class="pc-h1 mb-2">Дневник</h1>
+            <p class="pc-muted mb-0">Всички грижи, най-новите най-отгоре. Общо {{ activities|length }}.</p>
+        </div>
+        <a href="{% url 'activity_add' %}" class="pc-btn">Запиши грижа</a>
+    </div>
+
+    {% if activities %}
+        <ul class="pc-log">
+            {% for activity in activities %}
+                {% include 'care_logs/partials/activity_row.html' with activity=activity %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="pc-empty">
+            <p class="pc-serif">Дневникът е празен</p>
+            <p>Запиши първото хранене, разходка или преглед.</p>
+            <a href="{% url 'activity_add' %}" class="pc-btn">Запиши грижа</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

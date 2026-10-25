@@ -1,0 +1,27 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Изтриване на {{ object.name }}{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        <a href="{% url 'pet_detail' object.pk %}" class="pc-back">Обратно към {{ object.name }}</a>
+        <h1 class="pc-h1 pc-form-title">Да изтрия ли {{ object.name }}?</h1>
+
+        <div class="pc-notice pc-notice-danger mt-4">
+            Изтриването е окончателно. Заедно с любимеца ще изчезнат и
+            {{ object.care_activities.count }} запис{{ object.care_activities.count|pluralize:",а" }} от дневника му.
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% include 'common/partials/form_fields.html' with form=form %}
+
+            <div class="pc-form-actions">
+                <button type="submit" class="pc-btn pc-btn-danger">Изтрий окончателно</button>
+                <a href="{% url 'pet_detail' object.pk %}">Отказ</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,20 +1,39 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <meta charset="UTF-8">
-    <title>Добави любимец</title>
-</head>
-<body>
-    <h1>Добавяне на нов любимец</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p}}
-        <button type="submit">Запази</button>
-    </form>
-    
-    <br>
-    <a href="{% url 'index' %}">Към началната страница</a>
-</body>    
-</html>
+{% extends 'common/base.html' %}
+
+{% comment %}
+    Един шаблон за две страници:
+    - PetCreateView (нов любимец)  → object няма
+    - PetUpdateView (редакция)     → object е любимецът
+{% endcomment %}
+
+{% block title %}{% if object %}Редакция на {{ object.name }}{% else %}Нов любимец{% endif %}{% endblock %}
+
+{% block content %}
+
+    <div class="pc-narrow">
+        {% if object %}
+            <a href="{% url 'pet_detail' object.pk %}" class="pc-back">Обратно към {{ object.name }}</a>
+            <h1 class="pc-h1 pc-form-title">Редакция на {{ object.name }}</h1>
+            <p class="pc-form-intro">Промените се записват веднага след потвърждение.</p>
+        {% else %}
+            <a href="{% url 'pet_list' %}" class="pc-back">Обратно към любимците</a>
+            <h1 class="pc-h1 pc-form-title">Нов любимец</h1>
+            <p class="pc-form-intro">Полетата със звездичка са задължителни. За снимката е достатъчен линк или качен файл.</p>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% include 'common/partials/form_fields.html' with form=form %}
+
+            <div class="pc-form-actions">
+                <button type="submit" class="pc-btn">{% if object %}Запази промените{% else %}Добави любимеца{% endif %}</button>
+                {% if object %}
+                    <a href="{% url 'pet_detail' object.pk %}">Отказ</a>
+                {% else %}
+                    <a href="{% url 'pet_list' %}">Отказ</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Страницата не е намерена{% endblock %}
+
+{% block content %}
+    <div class="pc-404">
+        <div class="pc-404-code">404</div>
+        <h1 class="pc-h2 mt-3 mb-3">Тази страница не съществува</h1>
+        <p class="pc-lead mb-4 mx-auto">Адресът може да е сгрешен или любимецът вече да е изтрит.</p>
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+            <a href="{% url 'index' %}" class="pc-btn">Към началото</a>
+            <a href="{% url 'pet_list' %}" class="pc-btn pc-btn-outline">Всички любимци</a>
+        </div>
+    </div>
+{% endblock %}

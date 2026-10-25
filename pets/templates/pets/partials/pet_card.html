@@ -1,0 +1,10 @@
+{% comment %}
+    Портрет на любимец в арка. Преизползва се в галерията, на началната страница и при етикетите.
+{% endcomment %}
+<a href="{% url 'pet_detail' pet.pk %}" class="pc-pet">
+    <div class="pc-arch-frame">
+        <img src="{{ pet.photo }}" alt="Портрет на {{ pet.name }}" class="pc-arch" loading="lazy">
+    </div>
+    <h3 class="pc-pet-name">{{ pet.name }}</h3>
+    <div class="pc-pet-meta">{{ pet.category }}, {{ pet.age }} г.</div>
+</a>

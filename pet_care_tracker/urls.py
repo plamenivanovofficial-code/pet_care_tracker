@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('common.urls')),
     path('pets/', include('pets.urls')),
+    path('care/', include('care_logs.urls')),     # ← ТУК
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

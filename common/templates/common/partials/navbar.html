@@ -1,0 +1,43 @@
+{% with current=request.resolver_match.url_name %}
+<nav class="navbar navbar-expand-lg pc-navbar">
+    <div class="container">
+        <a class="pc-logo" href="{% url 'index' %}">Pet Care Tracker</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Отвори менюто">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'index' %}active{% endif %}" href="{% url 'index' %}"
+                       {% if current == 'index' %}aria-current="page"{% endif %}>Начало</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'pet_list' or current == 'pet_detail' %}active{% endif %}" href="{% url 'pet_list' %}"
+                       {% if current == 'pet_list' %}aria-current="page"{% endif %}>Любимци</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'activity_list' or current == 'activity_detail' %}active{% endif %}" href="{% url 'activity_list' %}"
+                       {% if current == 'activity_list' %}aria-current="page"{% endif %}>Дневник</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'tag_list' %}active{% endif %}" href="{% url 'tag_list' %}"
+                       {% if current == 'tag_list' %}aria-current="page"{% endif %}>Етикети</a>
+                </li>
+                <li class="nav-item dropdown ms-lg-3">
+                    <button class="pc-btn pc-btn-outline pc-btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Добави
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'pet_add' %}">Любимец</a></li>
+                        <li><a class="dropdown-item" href="{% url 'activity_add' %}">Запис в дневника</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tag_add' %}">Етикет</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endwith %}

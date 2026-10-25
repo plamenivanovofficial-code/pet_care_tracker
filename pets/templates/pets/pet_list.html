@@ -1,0 +1,57 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Любимци{% endblock %}
+
+{% block content %}
+
+    <div class="pc-section-head">
+        <div>
+            <h1 class="pc-h1 mb-2">
+                {% if request.GET.category %}{{ request.GET.category|capfirst }}{% else %}Любимци{% endif %}
+            </h1>
+            <p class="pc-muted mb-0">
+                {% if request.GET.category %}
+                    Показани са само любимците от този вид: {{ pets|length }}.
+                {% else %}
+                    Общо {{ pets|length }} в колекцията.
+                {% endif %}
+            </p>
+        </div>
+        <a href="{% url 'pet_add' %}" class="pc-btn">Добави любимец</a>
+    </div>
+
+    <form method="GET" action="{% url 'pet_list' %}" class="pc-filter" role="search">
+        <div class="pc-field">
+            <label class="form-label" for="filter-category">Филтър по вид</label>
+            <input type="text" id="filter-category" name="category"
+                   value="{{ request.GET.category|default:'' }}" placeholder="напр. Куче">
+        </div>
+        <button type="submit" class="pc-btn pc-btn-sm">Покажи</button>
+        {% if request.GET.category %}
+            <a href="{% url 'pet_list' %}" class="pc-btn pc-btn-outline pc-btn-sm">Изчисти филтъра</a>
+        {% endif %}
+    </form>
+
+    {% if pets %}
+        <div class="row g-4 g-lg-5">
+            {% for pet in pets %}
+                <div class="col-6 col-md-4 col-xl-3">
+                    {% include 'pets/partials/pet_card.html' with pet=pet %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="pc-empty">
+            {% if request.GET.category %}
+                <p class="pc-serif">Няма любимци от вид „{{ request.GET.category }}“</p>
+                <p>Провери изписването или виж цялата колекция.</p>
+                <a href="{% url 'pet_list' %}" class="pc-btn pc-btn-outline">Всички любимци</a>
+            {% else %}
+                <p class="pc-serif">Още няма любимци</p>
+                <p>Добави първия и започни дневника му.</p>
+                <a href="{% url 'pet_add' %}" class="pc-btn">Добави любимец</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}
