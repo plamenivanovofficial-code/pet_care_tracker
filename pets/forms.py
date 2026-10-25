@@ -1,5 +1,5 @@
 from django import forms
-from .models import Pet
+from .models import Pet, Tag
 
 class PetForm(forms.ModelForm):
     class Meta:
@@ -46,7 +46,7 @@ class PetForm(forms.ModelForm):
     def clean_category(self):
         category = self.cleaned_data['category']
         category = category.strip().capitalize()
-        return category
+        return category 
     
     def clean(self):
         self.cleaned_data = super().clean() 
@@ -56,3 +56,30 @@ class PetForm(forms.ModelForm):
         if not photo_url and not photo_file:
             raise forms.ValidationError('Добави снимка')  
         return self.cleaned_data  
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ['name']
+        
+        labels = {
+            'name': 'Етикет',
+        }
+        
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'напр. алергичен, възрастен'}),
+        }    
+        
+        error_messages = {
+            'name': {
+                'required': 'Моля, въведи име на етикета.',
+                'unique': 'Такъв етикет вече съществува.',
+                'max_length': 'Името е твърде дълго (макс. 20 символа).',
+            },
+        }
+        
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        name = name.strip().lower()
+        return name    
