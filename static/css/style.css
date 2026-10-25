@@ -29,20 +29,59 @@
 @font-face { font-family: 'Manrope'; src: url('../fonts/manrope-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 /* ---------- Токени ---------- */
-:root {
-    --pc-bg: #eceee8;         /* салвия */
-    --pc-surface: #f8f8f5;    /* порцелан */
-    --pc-ink: #1f2b25;        /* бутилково зелено */
-    --pc-muted: #66706a;
-    --pc-line: #cfd5cb;
-    --pc-brass: #9c7f4e;      /* месинг – само за малки акценти */
-    --pc-wine: #7b2d2d;       /* опасни действия */
+/* Две теми. Тъмната е по подразбиране; светлата се включва с data-theme="light" на <html>. */
+:root,
+[data-theme="dark"] {
+    /* „Тих лукс“: еспресо, слонова кост, шампанско злато */
+    --pc-bg: #1c1512;
+    --pc-surface: #251c18;
+    --pc-raised: #2e231e;
+    --pc-ink: #efe6d6;
+    --pc-muted: #a89a88;
+    --pc-line: #3b2f29;
+    --pc-brass: #c8a46a;
+    --pc-brass-soft: rgba(200, 164, 106, .35);
+    --pc-wine: #c0605c;
 
+    --pc-btn-bg: var(--pc-brass);      /* основен бутон */
+    --pc-btn-fg: #1c1512;
+    --pc-highlight: var(--pc-brass);   /* дати, бройки */
+    --pc-placeholder: #75685c;
+    --pc-footer-bg: #17110e;
+    --pc-toggler-filter: invert(1) sepia(.4);
+
+    color-scheme: dark;
+}
+
+[data-theme="light"] {
+    /* Салвия, порцелан, бутилково зелено, месинг */
+    --pc-bg: #eceee8;
+    --pc-surface: #f8f8f5;
+    --pc-raised: #dfe3db;
+    --pc-ink: #1f2b25;
+    --pc-muted: #5f6963;
+    --pc-line: #cfd5cb;
+    --pc-brass: #8a6d3e;
+    --pc-brass-soft: rgba(31, 43, 37, .3);
+    --pc-wine: #7b2d2d;
+
+    --pc-btn-bg: var(--pc-ink);
+    --pc-btn-fg: #f8f8f5;
+    --pc-highlight: var(--pc-ink);
+    --pc-placeholder: #9aa29c;
+    --pc-footer-bg: #e4e7e0;
+    --pc-toggler-filter: none;
+
+    color-scheme: light;
+}
+
+:root {
     --pc-serif: 'Forum', 'Cormorant Garamond', Georgia, serif;
     --pc-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
     --pc-gap: clamp(1.25rem, 3vw, 2.5rem);
 }
+
+body { transition: background-color .3s ease, color .3s ease; }
 
 /* ---------- Основа ---------- */
 body {
@@ -462,4 +501,114 @@ a.pc-tag:hover { border-color: var(--pc-brass); color: var(--pc-ink); }
 button, input, select, textarea, .pc-btn {
     font-feature-settings: "locl" 0;
     font-language-override: "RUS";
+}
+
+
+/* =========================================================
+   Тъмна бижутерска тема – пренаписвания върху основните правила
+   ========================================================= */
+
+/* Лого с малка арка – ехо на портретите */
+.pc-logo { display: inline-flex; align-items: center; gap: .55rem; letter-spacing: .02em; }
+.pc-logo::before {
+    content: "";
+    width: .7em;
+    height: .95em;
+    border: 1px solid var(--pc-brass);
+    border-bottom: 0;
+    border-radius: 999px 999px 0 0;
+}
+.pc-logo:hover { color: var(--pc-brass); }
+
+.pc-navbar .navbar-toggler-icon { filter: var(--pc-toggler-filter); }
+.pc-navbar .dropdown-menu { background: var(--pc-surface); }
+.pc-navbar .dropdown-item { color: var(--pc-ink); }
+.pc-navbar .dropdown-item:hover,
+.pc-navbar .dropdown-item:focus { background: var(--pc-raised); color: var(--pc-brass); }
+
+/* Бутони: злато върху еспресо */
+.pc-btn {
+    background: var(--pc-btn-bg);
+    border-color: var(--pc-btn-bg);
+    color: var(--pc-btn-fg);
+}
+.pc-btn:hover { background: transparent; color: var(--pc-btn-bg); }
+
+.pc-btn-outline {
+    background: transparent;
+    border-color: var(--pc-brass-soft);
+    color: var(--pc-ink);
+}
+.pc-btn-outline:hover { background: transparent; border-color: var(--pc-brass); color: var(--pc-brass); }
+
+.pc-btn-danger { background: var(--pc-wine); border-color: var(--pc-wine); color: var(--pc-btn-fg); }
+.pc-btn-danger:hover { background: transparent; color: var(--pc-wine); }
+
+/* Арки */
+.pc-arch { background: var(--pc-raised); }
+.pc-arch-frame { border-color: var(--pc-brass-soft); }
+.pc-pet:hover .pc-arch-frame,
+.pc-pet:focus-visible .pc-arch-frame { border-color: var(--pc-brass); }
+.pc-pet:hover .pc-pet-name { color: var(--pc-brass); }
+.pc-pet-name { transition: color .25s ease; }
+
+/* Единственото движение: арката в началото се „отваря“ при зареждане */
+.pc-hero-figure .pc-arch-frame { animation: pc-reveal 1.4s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes pc-reveal {
+    from { clip-path: inset(100% 0 0 0); opacity: .2; }
+    to   { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Заглавна част */
+.pc-h1 { font-size: clamp(2.6rem, 6.5vw, 4.75rem); }
+.pc-hero .pc-h1 { color: var(--pc-ink); }
+.pc-summary strong { color: var(--pc-highlight); font-weight: 600; }
+.pc-log-day { color: var(--pc-highlight); }
+
+/* Форми */
+.pc-field input[type="text"],
+.pc-field input[type="number"],
+.pc-field input[type="url"],
+.pc-field input[type="date"],
+.pc-field select,
+.pc-field textarea { border-bottom-color: var(--pc-muted); }
+.pc-field select option { background: var(--pc-surface); color: var(--pc-ink); }
+.pc-field input::placeholder,
+.pc-field textarea::placeholder { color: var(--pc-placeholder); }
+.pc-field input[type="file"]::file-selector-button { background: var(--pc-btn-bg); color: var(--pc-btn-fg); }
+.pc-field div[id^="id_tags"] label:has(input:checked) { border-color: var(--pc-brass); color: var(--pc-brass); }
+.pc-field div[id^="id_tags"] input { accent-color: var(--pc-brass); }
+.pc-field.is-disabled input,
+.pc-field.is-disabled select,
+.pc-field.is-disabled textarea { border-bottom-color: var(--pc-line); }
+
+.pc-tag { color: var(--pc-ink); }
+.pc-notice { background: var(--pc-surface); }
+.pc-footer { background: var(--pc-footer-bg); }
+
+@media (max-width: 991.98px) {
+    .pc-navbar .nav-link { display: inline-block; }
+}
+
+
+/* ---------- Превключвател на темата ---------- */
+.pc-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem 0;
+    background: none;
+    border: 0;
+    color: var(--pc-muted);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+.pc-theme-toggle:hover { color: var(--pc-ink); }
+.pc-theme-toggle .pc-theme-dot {
+    width: .85rem;
+    height: .85rem;
+    border-radius: 50%;
+    border: 1px solid var(--pc-brass);
+    background: linear-gradient(90deg, var(--pc-brass) 50%, transparent 50%);
 }
