@@ -1,4 +1,5 @@
 {% extends 'common/base.html' %}
+{% load pet_filters %}
 
 {% block title %}{{ pet.name }}{% endblock %}
 
@@ -23,7 +24,7 @@
                 </div>
                 <div>
                     <dt>Възраст</dt>
-                    <dd>{{ pet.age }} г.</dd>
+                    <dd>{{ pet.age|age_label }}</dd>
                 </div>
                 <div>
                     <dt>Етикети</dt>

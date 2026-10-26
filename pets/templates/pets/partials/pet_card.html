@@ -1,3 +1,4 @@
+{% load pet_filters %}
 {% comment %}
     Портрет на любимец в арка. Преизползва се в галерията, на началната страница и при етикетите.
 {% endcomment %}
@@ -6,5 +7,5 @@
         <img src="{{ pet.photo }}" alt="Портрет на {{ pet.name }}" class="pc-arch" loading="lazy">
     </div>
     <h3 class="pc-pet-name">{{ pet.name }}</h3>
-    <div class="pc-pet-meta">{{ pet.category }}, {{ pet.age }} г.</div>
+    <div class="pc-pet-meta">{{ pet.category }}, {{ pet.age|age_label }}</div>
 </a>
